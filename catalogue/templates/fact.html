@@ -72,7 +72,7 @@
                     "postfix terms": {"term":{"field":"post.exact","suggest":true,"node":true}},
                     "keywords": {"term":{"field":"keywords.term","suggest":true,"node":true}},
                     "tags": {"term":{"field":"tags","suggest":true,"node":true}},
-                    "source": {"term":{"field":"source","suggest":true,"node":true}}
+                    "source": {"term":{"field":"source.exact","suggest":true,"node":true}}
                 },    
                 "size":20
             }
