@@ -79,9 +79,19 @@
         function discoveryRecordView(data) {
             var details = '<div class="col-md-6"><div class="well" style="padding:5px;height:250px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
             details += '<p>';
-            details += data.record.author.name + ' (' + data.record.year + ')<br>';
+            var first = true;
+            for ( var i in data.record.author ) {
+                if ( first ) {
+                    first = false;
+                } else {
+                    details += ', '
+                }
+                details += data.record.author[i].name;
+            }
+            details += ' (' + data.record.year + ')<br>';
             details += '<span style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.record.title + '</span>';
             details += '<br>' + data.record.publisher.name;
+            details += '<a target="_blank" href="' + data.record.link[0].url + '">' + data.record.link[0].url + '</a>';
             details += '</p>';
             details += '</div></div>';     
             return details; 
