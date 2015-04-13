@@ -53,8 +53,8 @@
     jQuery(document).ready(function() {
 
         $('#catgraph').graphview({     
-            "target": "/query",
-            "datatype": "JSON",
+            "target": "http://contentmine.org/api/fact/query",
+            "datatype": "JSONP",
             "pushstate": false,
             "searchhintline": "type search terms and click enter to search",
             "titlefield": "record.title",
@@ -67,10 +67,11 @@
                     }         
                 },         
                 "facets":{                    
-                    "title": {"term":{"field":"record.title.exact"}},
-                    "authors": {"term":{"field":"record.author.name.exact","suggest":true,"node":true}},
-                    "publishers": {"term":{"field":"record.publisher.name.exact","suggest":true,"node":true}},
-                    "year": {"term":{"field":"record.year","suggest":true,"node":true}}
+                    "prefix terms": {"term":{"field":"pre.exact","suggest":true,"node":true}},
+                    "fact": {"term":{"field":"fact.exact","suggest":true,"node":true}},
+                    "postfix terms": {"term":{"field":"post.exact","suggest":true,"node":true}},
+                    "keywords": {"term":{"field":"keywords.term","suggest":true,"node":true}},
+                    "tags": {"term":{"field":"tags","suggest":true,"node":true}}
                 },    
                 "size":20
             }

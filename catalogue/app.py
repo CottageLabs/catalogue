@@ -294,6 +294,10 @@ def browse():
 def graph():
     return render_template('graph.html')
 
+@app.route('/fact', methods=['GET','POST'])
+def fact():
+    return render_template('fact.html')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=app.config['DEBUG'], port=app.config['PORT'])
