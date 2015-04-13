@@ -57,7 +57,7 @@
                     <h1>CATALOGUE</h1>
                 </div>
                 <div class="col-md-4">
-                    <img src="http://canary.cottagelabs.com/CM.png" style="width:100%;">
+                    <img class="img thumbnail" src="http://canary.cottagelabs.com/CM.png" style="width:100%;">
                 </div>
             </div>
         </div>
@@ -79,9 +79,9 @@
         function discoveryRecordView(data) {
             var details = '<div class="col-md-6"><div class="well" style="padding:5px;height:250px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
             details += '<p>';
-            details += data.record.author.name.exact + ' (' + data.record.year + ')<br>';
-            details += '<span style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.record.title.exact + '</span>';
-            details += '<br>' + data.record.publisher.name.exact;
+            details += data.record.author.name + ' (' + data.record.year + ')<br>';
+            details += '<span style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.record.title + '</span>';
+            details += '<br>' + data.record.publisher.name;
             details += '</p>';
             details += '</div></div>';     
             return details; 
@@ -143,7 +143,7 @@
             "datatype": "JSON",
             "pushstate": false,
             "searchhintline": "type search terms and click enter to search",
-            "titlefield": "record.title.exact",
+            "titlefield": "record.title",
             "defaultquery": {         
                 "query": {             
                     "bool": {                 
