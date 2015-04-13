@@ -87,12 +87,28 @@
                 } else {
                     details += ', '
                 }
-                details += data.record.author[i].name;
+                if ( data.record.author[i].name ) {
+                    details += data.record.author[i].name;
+                }
             }
-            details += ' (' + data.record.year + ')<br>';
-            details += '<span style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.record.title + '</span>';
-            details += '<br>' + data.record.publisher.name;
-            details += '<a target="_blank" href="' + data.record.link[0].url + '">' + data.record.link[0].url + '</a>';
+            if ( data.record.year ) {
+                details += ' (' + data.record.year + ')<br>';
+            }
+            if ( data.record.title ) {
+                details += '<span style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.record.title + '</span>';
+            }
+            if ( data.record.publisher ) {
+                if ( data.record.publisher.name ) {
+                    details += '<br>' + data.record.publisher.name;
+                }
+            }
+            if ( data.record.link ) {
+                if ( data.record.link[0] ) {
+                    if ( data.record.link[0].url ) {
+                        details += '<a target="_blank" href="' + data.record.link[0].url + '">' + data.record.link[0].url + '</a>';
+                    }
+                }
+            }
             details += '</p>';
             details += '</div></div>';     
             return details; 
