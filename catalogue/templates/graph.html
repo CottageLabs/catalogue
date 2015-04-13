@@ -35,9 +35,6 @@
     <!-- get bootstrap js -->
     <script type="text/javascript" src="http://contentmine.org/static/vendor/bootstrap-3.0.3/js/bootstrap.min.js"></script>
 
-    <!-- get graphview -->
-    <script type="text/javascript" src="/static/jquery.graphview.js"></script>
-
     <!-- get d3 -->
     <script type="text/javascript" src="http://contentmine.org/static/vendor/d3/d3.min.js"></script>
     
@@ -45,125 +42,18 @@
     <script type="text/javascript" src="http://contentmine.org/static/vendor/select2-release-3.2/select2.min.js"></script>
     <link rel="stylesheet" href="http://contentmine.org/static/vendor/select2-release-3.2/select2.css">
     <link rel="stylesheet" href="http://contentmine.org/static/vendor/select2-release-3.2/select2-bootstrap.css">
-                
+
+    <!-- get graphview -->
+    <script type="text/javascript" src="/static/jquery.graphview.js"></script>
+
 </head>
 
-<body>
+<body style="background-image:url('http://canary.cottagelabs.com/CM.png');background-repeat:no-repeat;background-position:middle;">
         
-    <div class="container-fluid">
-        <div class="container" style="margin-top:10px;">
-            <div class="row">
-                <div class="col-md-8">
-                    <h1>CATALOGUE</h1>
-                </div>
-                <div class="col-md-4">
-                    <img class="img thumbnail" src="http://canary.cottagelabs.com/CM.png" style="width:100%;">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12" style="margin-top:5px;">
-                    <div id="catalogue"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="catalogue" style="height:100%;width:100%;"></div>
         
     <script>
     jQuery(document).ready(function() {
-
-        function discoveryRecordView(data) {
-            var details = '<div class="col-md-12"><div class="well" style="padding:5px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
-            details += '<p>';
-            var first = true;
-            for ( var i in data.record.author ) {
-                alert(JSON.stringify(data.record.author[i],"","    "));
-                if ( first ) {
-                    first = false;
-                } else {
-                    details += ', '
-                }
-                if ( data.record.author[i].name ) {
-                    details += data.record.author[i].name;
-                }
-            }
-            if ( data.record.year ) {
-                details += ' (' + data.record.year + ')';
-            }
-            if ( data.record.title ) {
-                details += '<br><span style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.record.title + '</span>';
-            }
-            if ( data.record.publisher ) {
-                if ( data.record.publisher.name ) {
-                    details += '<br>' + data.record.publisher.name;
-                }
-            }
-            if ( data.record.link ) {
-                if ( data.record.link[0] ) {
-                    if ( data.record.link[0].url ) {
-                        details += '<br><a target="_blank" href="http://canary.contentmine.org/demo?url=' + data.record.link[0].url + '">Put it through canary</a>';
-                    }
-                }
-            }
-            details += '</p>';
-            details += '</div></div>';     
-            return details; 
-        }
-
-        var cshowresults = function(data) {
-            var restable = '<div class="row" style="padding-top:20px;">';     
-            for ( var r in data.hits.hits ) {         
-                restable += discoveryRecordView(data.hits.hits[r]._source);     
-            }     
-            restable += '</div>';     
-            $('.graphview_panel').html(restable);     
-            $('.graphview_total').html(data.hits.total);     
-            $('.graphview_loading').html('... LOADING').hide();     
-            if ( data.hits.total == 0 ) {         
-                $('.graphview_loading').html('NO RESULTS FOUND').show();     
-            } 
-        }  
-
-        var cuitemplate = function() {     
-            var options = $.fn.graphview.options;     
-            var ui = '<div class="graphview">';     
-            ui += '<div class="row graphview_searcharea">';      
-            ui += '<div class="col-md-3">';
-            ui += '<select class="graphview_suggest form-control">';        
-            ui += '<option style="color:' + options.fill("records") + ';" data-value="records">filter by:</option>';        
-            for ( var key in options.defaultquery.facets ) {            
-                var obj = options.defaultquery.facets[key];            
-                if ( key != "range" && obj.term.suggest ) { 
-                    ui += '<option data-value="' + obj.term.field + '">' + key + '</option>';                
-                    ui += ', ';            
-                }        
-            }        
-            ui += '</select>';
-            ui += '</div>';
-            ui += '<div class="col-md-9">';      
-            ui += '<div><input type="text" class="form-control query_string" style="width:97%;" data-option="query.bool.must.query_string.query"></div>';      
-            ui += '<div style="height:35px;margin-top:10px;">';      
-            ui += '<div style="display:inline;"><span class="searchcontrols">';     
-            ui += '<input class="form-control graphview_from" type="text" value="';     
-            ui += options.defaultquery.from;     
-            ui += '" style="width:40px;margin:-5px 0 0 0;padding:1px 1px 0 0;color:#666;text-align:center;display:inline;">';     
-            ui += ' to ';     
-            ui += '<input class="form-control graphview_to" type="text" value="';     
-            ui += options.defaultquery.size;     
-            ui += '" style="width:40px;margin:-5px 0 0 0;padding:1px 1px 0 0;color:#666;text-align:center;display:inline;"> of </span> <span class="graphview_total searchcontrols" style="font-size:16px;font-weight:bold;color:#999;"></span>';     
-            ui += ' <span class="graphview_loading">... LOADING</span>';     
-            ui += '</div>';      
-            ui += '</div>';      
-            ui += '</div>';     
-            ui += '</div>'; // closes searcharea      
-            ui += '<div class="graphview_panel searchcontrols"></div>';      
-            ui += '</div>'; // closes graphview      
-            return ui; 
-        }
 
         $('#catalogue').graphview({     
             "target": "/query",
@@ -186,11 +76,8 @@
                     "year": {"term":{"field":"record.year","suggest":true,"node":true}}
                 },    
                 "size":20
-            }//,     
-            //showresults: cshowresults,
-            //uitemplate: cuitemplate 
+            }
         }); 
-    
     
     });
     </script>
