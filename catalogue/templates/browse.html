@@ -36,7 +36,7 @@
     <script type="text/javascript" src="http://contentmine.org/static/vendor/bootstrap-3.0.3/js/bootstrap.min.js"></script>
 
     <!-- get graphview -->
-    <script type="text/javascript" src="http://contentmine.org/static/jquery.graphview.js"></script>
+    <script type="text/javascript" src="/static/jquery.graphview.js"></script>
 
     <!-- get d3 -->
     <script type="text/javascript" src="http://contentmine.org/static/vendor/d3/d3.min.js"></script>
@@ -57,7 +57,7 @@
                     <p>Catalogue</p>
                 </div>
                 <div class="col-md-4">
-                    <img src="http://contentmine.org/CM.png" style="width:100%;">
+                    <img src="http://contentmine.org/static/CM.png" style="width:100%;">
                 </div>
             </div>
         </div>
@@ -140,6 +140,7 @@
 
         $('#catalogue').graphview({     
             "target": "/query",
+            "datatype": "JSONP",
             "pushstate": false,
             "searchhintline": "type search terms and click enter to search",
             "titlefield": "record.title.exact",
