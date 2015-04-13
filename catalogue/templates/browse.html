@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ContentMine</title>
+    <meta name="description" content="">
+    <meta name="author" content="Cottage Labs">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="http://contentmine.org/static/favicon.ico" rel="icon" type="image/x-icon" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+
+    <!-- get bootstrap css -->
+    <link rel="stylesheet" href="http://contentmine.org/static/vendor/bootstrap-3.0.3/css/bootstrap.min.css">
+
+    <!-- get contentmine css -->
+    <link rel="stylesheet" href="http://contentmine.org/static/contentmine.css">
+
+    <!-- get jquery-ui -->
+    <link rel="stylesheet" href="http://contentmine.org/static/vendor/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css">
+
+    <!-- get jquery js -->
+    <script type="text/javascript" src="http://contentmine.org/static/vendor/jquery-1.10.2.min.js"></script>
+
+    <!-- get jquery-ui -->
+    <script type="text/javascript" src="http://contentmine.org/static/vendor/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <!-- get bootstrap js -->
+    <script type="text/javascript" src="http://contentmine.org/static/vendor/bootstrap-3.0.3/js/bootstrap.min.js"></script>
+
+    <!-- get graphview -->
+    <script type="text/javascript" src="http://contentmine.org/static/jquery.graphview.js"></script>
+
+    <!-- get d3 -->
+    <script type="text/javascript" src="http://contentmine.org/static/vendor/d3/d3.min.js"></script>
+    
+    <!-- get select2 -->
+    <script type="text/javascript" src="http://contentmine.org/static/vendor/select2-release-3.2/select2.min.js"></script>
+    <link rel="stylesheet" href="http://contentmine.org/static/vendor/select2-release-3.2/select2.css">
+    <link rel="stylesheet" href="http://contentmine.org/static/vendor/select2-release-3.2/select2-bootstrap.css">
+                
+</head>
+
+<body>
+        
+    <div class="container-fluid">
+        <div class="container" style="margin-top:10px;">
+            <div class="row">
+                <div class="col-md-8">
+                    <p>Catalogue</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="http://contentmine.org/CM.png" style="width:100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="margin-top:5px;">
+                    <div id="catalogue"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <script>
+    jQuery(document).ready(function() {
+
+        function discoveryRecordView(data) {
+            var details = '<div class="col-md-3"><div class="well" style="padding:5px;height:250px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
+            details += '<p>';
+            data.pre ? details += data.pre + '<br>' : false;
+            details += '<a href="/fact/' + data.id + '" style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.fact + '</a>';
+            data.post ? details += '<br>' + data.post : false;
+            details += '</p>';     
+            details += '</div></div>';     
+            return details; 
+        }
+
+        var cshowresults = function(data) {
+            var restable = '<div class="row" style="padding-top:20px;">';     
+            for ( var r in data.hits.hits ) {         
+                restable += discoveryRecordView(data.hits.hits[r]._source);     
+            }     
+            restable += '</div>';     
+            $('.graphview_panel').html(restable);     
+            $('.graphview_total').html(data.hits.total);     
+            $('.graphview_loading').html('... LOADING').hide();     
+            if ( data.hits.total == 0 ) {         
+                $('.graphview_loading').html('NO RESULTS FOUND').show();     
+            } 
+        }  
+
+        var cuitemplate = function() {     
+            var options = $.fn.graphview.options;     
+            var ui = '<div class="graphview">';     
+            ui += '<div class="row graphview_searcharea">';      
+            ui += '<div class="col-md-3">';
+            ui += '<select class="graphview_suggest form-control">';        
+            ui += '<option style="color:' + options.fill("records") + ';" data-value="records">filter by:</option>';        
+            for ( var key in options.defaultquery.facets ) {            
+                var obj = options.defaultquery.facets[key];            
+                if ( key != "range" && obj.term.suggest ) { 
+                    ui += '<option data-value="' + obj.term.field + '">' + key + '</option>';                
+                    ui += ', ';            
+                }        
+            }        
+            ui += '</select>';
+            ui += '</div>';
+            ui += '<div class="col-md-9">';      
+            ui += '<div><input type="text" class="form-control query_string" style="width:97%;" data-option="query.bool.must.query_string.query"></div>';      
+            ui += '<div style="height:35px;margin-top:10px;">';      
+            ui += '<div style="display:inline;"><span class="searchcontrols">';     
+            ui += '<input class="form-control graphview_from" type="text" value="';     
+            ui += options.defaultquery.from;     
+            ui += '" style="width:40px;margin:-5px 0 0 0;padding:1px 1px 0 0;color:#666;text-align:center;display:inline;">';     
+            ui += ' to ';     
+            ui += '<input class="form-control graphview_to" type="text" value="';     
+            ui += options.defaultquery.size;     
+            ui += '" style="width:40px;margin:-5px 0 0 0;padding:1px 1px 0 0;color:#666;text-align:center;display:inline;"> of </span> <span class="graphview_total searchcontrols" style="font-size:16px;font-weight:bold;color:#999;"></span>';     
+            ui += ' <span class="graphview_loading">... LOADING</span>';     
+            ui += '</div>';      
+            ui += '</div>';      
+            ui += '</div>';     
+            ui += '</div>'; // closes searcharea      
+            ui += '<div class="graphview_panel searchcontrols"></div>';      
+            ui += '</div>'; // closes graphview      
+            return ui; 
+        }
+
+        $('#catalogue').graphview({     
+            "target": "/query",
+            "pushstate": false,
+            "searchhintline": "type search terms and click enter to search",
+            "titlefield": "record.title.exact",
+            "defaultquery": {         
+                "query": {             
+                    "bool": {                 
+                        "must":[                     
+                            {"match_all": {}}                 
+                        ]             
+                    }         
+                },         
+                "facets":{                    
+                    "title": {"term":{"field":"record.title.exact","suggest":true}},
+                    "authors": {"term":{"field":"record.author.exact","suggest":true}},
+                    "publishers": {"term":{"field":"record.publisher.name.exact","suggest":true}},
+                    "year": {"term":{"field":"record.year.exact","suggest":true}}
+                },    
+                "size":16     
+            },     
+            showresults: cshowresults,     
+            uitemplate: cuitemplate 
+        }); 
+    
+    
+    });
+    </script>
+        
+    
+</body>
+</html>
