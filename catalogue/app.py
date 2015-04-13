@@ -290,6 +290,10 @@ def title(title=None):
 def browse():
     return render_template('browse.html')
 
+@app.route('/graph', methods=['GET','POST'])
+def graph():
+    return render_template('graph.html')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=app.config['DEBUG'], port=app.config['PORT'])
