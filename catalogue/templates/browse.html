@@ -54,10 +54,10 @@
         <div class="container" style="margin-top:10px;">
             <div class="row">
                 <div class="col-md-8">
-                    <p>Catalogue</p>
+                    <h1>CATALOGUE</h1>
                 </div>
                 <div class="col-md-4">
-                    <img src="http://contentmine.org/static/CM.png" style="width:100%;">
+                    <img src="http://canary.cottagelabs.com/CM.png" style="width:100%;">
                 </div>
             </div>
         </div>
@@ -77,12 +77,12 @@
     jQuery(document).ready(function() {
 
         function discoveryRecordView(data) {
-            var details = '<div class="col-md-3"><div class="well" style="padding:5px;height:250px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
+            var details = '<div class="col-md-6"><div class="well" style="padding:5px;height:250px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
             details += '<p>';
-            data.pre ? details += data.pre + '<br>' : false;
-            details += '<a href="/fact/' + data.id + '" style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.fact + '</a>';
-            data.post ? details += '<br>' + data.post : false;
-            details += '</p>';     
+            details += data.record.author.name.exact + ' (' + data.record.year + ')<br>';
+            details += '<span style="color:#187c83;font-weight:bold;font-size:1.8em;">' + data.record.title.exact + '</span>';
+            details += '<br>' + data.record.publisher.name.exact;
+            details += '</p>';
             details += '</div></div>';     
             return details; 
         }
@@ -154,9 +154,9 @@
                 },         
                 "facets":{                    
                     "title": {"term":{"field":"record.title.exact","suggest":true}},
-                    "authors": {"term":{"field":"record.author.exact","suggest":true}},
+                    "authors": {"term":{"field":"record.author.name.exact","suggest":true}},
                     "publishers": {"term":{"field":"record.publisher.name.exact","suggest":true}},
-                    "year": {"term":{"field":"record.year.exact","suggest":true}}
+                    "year": {"term":{"field":"record.year","suggest":true}}
                 },    
                 "size":16     
             },     
