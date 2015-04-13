@@ -771,7 +771,7 @@ if (!Array.prototype.indexOf) {
             }
             ui += '</select>';
             ui += '<input type="text" class="query_string" style="width:400px;" data-option="query.bool.must.query_string.query" placeholder="mix and match some search terms" />';
-            ui += ' <img class="graphview_loading" style="width:30px;margin-top:-10px;" src="loading.gif" />';
+            //ui += ' <img class="graphview_loading" style="width:30px;margin-top:-10px;" src="loading.gif" />';
             ui += '</div>'; // closes searcharea
 
             ui += '<div class="graphview_optionsarea" style="position:absolute;top:40px;left:5px;z-index:1000;">';
