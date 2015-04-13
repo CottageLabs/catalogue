@@ -77,7 +77,7 @@
     jQuery(document).ready(function() {
 
         function discoveryRecordView(data) {
-            var details = '<div class="col-md-6"><div class="well" style="padding:5px;height:250px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
+            var details = '<div class="col-md-12"><div class="well" style="padding:5px;overflow:hidden;border-color:#187c83;border-width:3px;background-color:#fff;color:#92ce73;">';     
             details += '<p>';
             var first = true;
             for ( var i in data.record.author ) {
@@ -105,7 +105,7 @@
             if ( data.record.link ) {
                 if ( data.record.link[0] ) {
                     if ( data.record.link[0].url ) {
-                        details += '<a target="_blank" href="' + data.record.link[0].url + '">' + data.record.link[0].url + '</a>';
+                        details += '<br><a target="_blank" href="' + data.record.link[0].url + '">' + data.record.link[0].url + '</a>';
                     }
                 }
             }
@@ -180,12 +180,12 @@
                     }         
                 },         
                 "facets":{                    
-                    "title": {"term":{"field":"record.title.exact","suggest":true}},
+                    "title": {"term":{"field":"record.title.exact"}},
                     "authors": {"term":{"field":"record.author.name.exact","suggest":true}},
                     "publishers": {"term":{"field":"record.publisher.name.exact","suggest":true}},
                     "year": {"term":{"field":"record.year","suggest":true}}
                 },    
-                "size":16     
+                "size":20
             },     
             showresults: cshowresults,     
             uitemplate: cuitemplate 
