@@ -20,9 +20,6 @@
     <!-- get bootstrap css -->
     <link rel="stylesheet" href="http://contentmine.org/static/vendor/bootstrap-3.0.3/css/bootstrap.min.css">
 
-    <!-- get contentmine css -->
-    <link rel="stylesheet" href="http://contentmine.org/static/contentmine.css">
-
     <!-- get jquery-ui -->
     <link rel="stylesheet" href="http://contentmine.org/static/vendor/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css">
 
@@ -50,12 +47,12 @@
 
 <body style="background-image:url('http://canary.cottagelabs.com/CM.png');background-repeat:no-repeat;background-position:middle;">
         
-    <div id="catalogue" style="height:100%;width:100%;"></div>
+    <div id="catgraph" style="height:100%;width:100%;min-height:600px;min-width:800px;"></div>
         
     <script>
     jQuery(document).ready(function() {
 
-        $('#catalogue').graphview({     
+        $('#catgraph').graphview({     
             "target": "/query",
             "datatype": "JSON",
             "pushstate": false,
