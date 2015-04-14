@@ -73,7 +73,7 @@
                     "keywords": {"term":{"field":"keywords.term","suggest":true,"node":true}},
                     "tags": {"term":{"field":"tags","suggest":true,"node":true}},
                     "set": {"term":{"field":"set","suggest":true,"node":true}},
-                    "url": {"term":{"url.exact":"set","suggest":true,"node":true}},
+                    "url": {"term":{"field":"url.exact","suggest":true,"node":true}},
                     "source": {"term":{"field":"source.exact","suggest":true,"node":true}}
                 },    
                 "size":20
